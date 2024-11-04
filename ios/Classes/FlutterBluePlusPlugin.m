@@ -333,6 +333,7 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
             NSDictionary* args = (NSDictionary*)call.arguments;
             NSString  *remoteId       = args[@"remote_id"];
             NSNumber  *autoConnect    = args[@"auto_connect"];
+            NSNumber  *ctbkEnabled    = args[@"ctbk_enabled"];
 
             // check adapter state
             if ([self isAdapterOn] == false) {
@@ -394,6 +395,14 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
                 // when all developers can be excpected to be on iOS 17+
                 [options setObject:autoConnect forKey:@"kCBConnectOptionEnableAutoReconnect"];
             } 
+            
+            // mleung 20241031
+            // - added option of Cross Transport Bridging Key
+            if (@available(iOS 13, *)) {
+                if( ctbkEnabled != nil ) {
+                    [options setObject:ctbkEnabled forKey:@"kCBConnectPeripheralOptionEnableTransportBridgingKey"];
+                }
+            }
 
             [self.centralManager connectPeripheral:peripheral options:options];
 
