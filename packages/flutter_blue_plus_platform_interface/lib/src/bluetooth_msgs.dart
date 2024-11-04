@@ -215,16 +215,19 @@ class BmScanResponse {
 class BmConnectRequest {
   DeviceIdentifier remoteId;
   bool autoConnect;
+  bool ctbkEnabled;
 
   BmConnectRequest({
     required this.remoteId,
     required this.autoConnect,
+    required this.ctbkEnabled,
   });
 
   Map<dynamic, dynamic> toMap() {
     final Map<dynamic, dynamic> data = {};
     data['remote_id'] = remoteId.str;
     data['auto_connect'] = autoConnect ? 1 : 0;
+    data['ctbk_enabled'] = ctbkEnabled ? 1 : 0;
     return data;
   }
 }
