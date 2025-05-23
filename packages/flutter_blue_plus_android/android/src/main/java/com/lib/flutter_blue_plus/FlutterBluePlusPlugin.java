@@ -833,7 +833,10 @@ public class FlutterBluePlusPlugin implements
 
                 case "discoverServices":
                 {
-                    String remoteId = (String) call.arguments;
+                    // String remoteId = (String) call.arguments;
+                    HashMap<String, Object> data = call.arguments();
+                    String   remoteId     = (String) data.get("remote_id");
+                    // String[] serviceUuids = (String[]) data.get("service_uuids");
 
                     // check connection
                     BluetoothGatt gatt = mConnectedDevices.get(remoteId);

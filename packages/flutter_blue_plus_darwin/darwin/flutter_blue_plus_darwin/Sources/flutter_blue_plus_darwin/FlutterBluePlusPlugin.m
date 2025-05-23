@@ -434,7 +434,21 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
         else if ([@"discoverServices" isEqualToString:call.method])
         {
             // remoteId is passed raw, not in a NSDictionary
-            NSString *remoteId = [call arguments];
+            // NSString *remoteId = [call arguments];
+            NSDictionary* args     = (NSDictionary*)call.arguments;
+            NSString*     remoteId = args[@"remote_id"];
+            NSArray*      suuidStrs   = args[@"service_uuids"];
+            
+            NSMutableArray* suuids = nil;
+
+            if( suuidStrs != nil ) {
+                for( NSString* str in suuidStrs) {
+                    if( suuids == nil ) {
+                        suuids = [@[] mutableCopy];
+                    }
+                    [suuids addObject:[CBUUID UUIDWithString:str]];
+                }
+            }
 
             // Find peripheral
             CBPeripheral *peripheral = [self getConnectedPeripheral:remoteId];
@@ -449,7 +463,7 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
             [self.characteristicsToDiscover removeAllObjects];
 
             // start discovery
-            [peripheral discoverServices:nil];
+            [peripheral discoverServices:suuids];
 
             result(@YES);
         }
