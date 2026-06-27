@@ -617,7 +617,7 @@ class FlutterBluePlus {
 
   static void log(String s) {
     _logsController.add(s);
-    print(s);
+    // Local patch: suppress verbose package logs.
   }
 
   /// Checks if Bluetooth functionality is turned on

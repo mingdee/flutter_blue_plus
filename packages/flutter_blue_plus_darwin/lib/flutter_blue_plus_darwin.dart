@@ -193,9 +193,8 @@ final class FlutterBluePlusDarwin extends FlutterBluePlusPlatform {
       var args = arguments.toString();
       func = _logColor ? '\x1B[1;30m$func\x1B[0m' : func;
       args = _logColor ? '\x1B[1;35m$args\x1B[0m' : args;
-      print('[FBP] $func args: $args');
+      // Local patch: suppress verbose package logs.
     }
-    print(arguments);
     // invoke
     final out = await methodChannel.invokeMethod<T>(method, arguments);
 
@@ -205,7 +204,7 @@ final class FlutterBluePlusDarwin extends FlutterBluePlusPlatform {
       var result = out.toString();
       func = _logColor ? '\x1B[1;30m$func\x1B[0m' : func;
       result = _logColor ? '\x1B[1;33m$result\x1B[0m' : result;
-      print('[FBP] $func result: $result');
+      // Local patch: suppress verbose package logs.
     }
 
     return out;
@@ -240,7 +239,7 @@ final class FlutterBluePlusDarwin extends FlutterBluePlusPlatform {
       };
       func = _logColor ? '\x1B[1;30m$func\x1B[0m' : func;
       result = _logColor ? '\x1B[1;33m$result\x1B[0m' : result;
-      print('[FBP] $func result: $result');
+      // Local patch: suppress verbose package logs.
     }
 
     // handle method call

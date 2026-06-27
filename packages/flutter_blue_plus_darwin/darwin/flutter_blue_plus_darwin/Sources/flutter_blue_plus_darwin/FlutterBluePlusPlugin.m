@@ -96,8 +96,6 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
 {
     @try
     {
-        Log(LDEBUG, @"handleMethodCall: %@", call.method);
-
         if ([@"setLogLevel" isEqualToString:call.method])
         {
             NSNumber *idx = [call arguments];
@@ -1447,9 +1445,6 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
         Log(LERROR, @"didUpdateValueForCharacteristic:");
         Log(LERROR, @"  chr: %@", [characteristic.UUID uuidStr]);
         Log(LERROR, @"  error: %@", [error localizedDescription]);
-    } else {
-        Log(LDEBUG, @"didUpdateValueForCharacteristic:");
-        Log(LDEBUG, @"  chr: %@", [characteristic.UUID uuidStr]);
     }
 
     CBService *primaryService = [self getPrimaryService:peripheral characteristic:characteristic];
@@ -1481,9 +1476,6 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
         Log(LERROR, @"didWriteValueForCharacteristic:");
         Log(LERROR, @"  chr: %@", [characteristic.UUID uuidStr]);
         Log(LERROR, @"  error: %@", [error localizedDescription]);
-    } else {
-        Log(LDEBUG, @"didWriteValueForCharacteristic:");
-        Log(LDEBUG, @"  chr: %@", [characteristic.UUID uuidStr]);
     }
 
     CBService *primaryService = [self getPrimaryService:peripheral characteristic:characteristic];
@@ -2134,7 +2126,8 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
         va_list args;
         va_start(args, format);
         NSString* msg = [[NSString alloc] initWithFormat:format arguments:args];
-        NSLog(@"%@", msg);
+        // Local patch: suppress native blue_plus logs.
+        (void)msg;
         va_end(args);
     }
 }
