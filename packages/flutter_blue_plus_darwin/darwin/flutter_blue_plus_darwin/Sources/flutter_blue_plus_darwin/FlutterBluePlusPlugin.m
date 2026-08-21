@@ -383,6 +383,7 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
             if (@available(iOS 17, *)) {
                 // note: use CBConnectPeripheralOptionEnableAutoReconnect constant
                 // when all developers can be excpected to be on iOS 17+
+                // note: we can't use CBConnectPeripheralOptionEnableAutoReconnect as connectPeripheral will fail.
                 [options setObject:autoConnect forKey:@"kCBConnectOptionEnableAutoReconnect"];
             } 
             
@@ -390,7 +391,7 @@ typedef NS_ENUM(NSUInteger, LogLevel) {
             // - added option of Cross Transport Bridging Key
             if (@available(iOS 13, *)) {
                 if( ctbkEnabled != nil ) {
-                    [options setObject:ctbkEnabled forKey:@"kCBConnectPeripheralOptionEnableTransportBridgingKey"];
+                    [options setObject:ctbkEnabled forKey:CBConnectPeripheralOptionEnableTransportBridgingKey];
                 }
             }
 
